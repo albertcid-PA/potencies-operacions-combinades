@@ -775,6 +775,7 @@ function initTheory() {
     $('#try-mf-wrap').hidden = false;
     inp.hidden = true;
     mf.smartFence = true;
+    setupKeyboard();
     // com a la llibreta: * o x -> punt de multiplicar (·) i / -> dos punts (:)
     const SUBST = { '*': '\\cdot', 'x': '\\cdot', 'X': '\\cdot', '×': '\\cdot', '/': ':', '÷': ':' };
     mf.addEventListener('beforeinput', e => {
@@ -823,6 +824,30 @@ function initTheory() {
   };
   $('#try-go').addEventListener('click', go);
   inp.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+}
+
+// Teclat virtual de MathLive simplificat: només el que cal a 1r d'ESO
+function setupKeyboard() {
+  const kb = window.mathVirtualKeyboard;
+  if (!kb) return;
+  const op = (latex, label) => ({ latex, label: label || undefined, class: 'kb-op' });
+  try {
+    kb.layouts = [{
+      label: 'Operacions',
+      tooltip: 'Operacions combinades',
+      rows: [
+        ['7', '8', '9', '[separator-5]', op('+'), op('-', '−'), '[separator-5]',
+          { label: '<span>x<sup>2</sup></span>', insert: '^{2}', class: 'kb-pow', tooltip: 'Al quadrat' },
+          { label: '<span>x<sup>3</sup></span>', insert: '^{3}', class: 'kb-pow', tooltip: 'Al cub' }],
+        ['4', '5', '6', '[separator-5]', op('\\cdot', '·'), op(':'), '[separator-5]',
+          { label: '<span>x<sup>n</sup></span>', insert: '^{#?}', class: 'kb-pow', tooltip: 'Potència' },
+          { latex: '\\sqrt{#0}', insert: '\\sqrt{#?}', class: 'kb-pow', tooltip: 'Arrel quadrada' }],
+        ['1', '2', '3', '[separator-5]', op('('), op(')'), '[separator-5]', op('['), op(']')],
+        ['[separator-5]', '0', '[separator-5]', '[separator-5]', '[left]', '[right]', '[separator-5]', '[backspace]', '[hide-keyboard]'],
+      ],
+    }];
+    kb.editToolbar = 'none';
+  } catch (e) { /* si l'API canvia, queda el teclat per defecte */ }
 }
 
 /* ---------------- Pràctica: controls ---------------- */
