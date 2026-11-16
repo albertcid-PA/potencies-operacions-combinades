@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potències i operacions combinades</title>
+<meta name="description" content="Aprèn i practica operacions combinades i propietats de les potències (1r ESO).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathlive@0.101.0/dist/mathlive.min.js"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c0392b'/%3E%3Ctext x='14' y='46' font-family='serif' font-size='34' fill='white'%3Ex%3C/text%3E%3Ctext x='36' y='28' font-family='serif' font-size='20' fill='white'%3E2%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v=21">
+</head>
+<body>
+<header class="top">
+  <div class="top-in wrap">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M3 20h34M20 3v34M8 8c6 5 6 19 0 24M32 8c-6 5-6 19 0 24" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+      </div>
+      <div>
+        <p class="kicker">Qui és l'MVP? · 1r ESO</p>
+        <h1>Potències i operacions combinades</h1>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Seccions">
+      <button role="tab" id="tab-apren" aria-controls="apren" aria-selected="true" data-tab="apren">Aprèn</button>
+      <button role="tab" id="tab-practica" aria-controls="practica" aria-selected="false" data-tab="practica">Practica</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- =================== APRÈN =================== -->
+<section id="apren" role="tabpanel" aria-labelledby="tab-apren">
+  <div class="hero">
+    <div class="hero-txt">
+      <p class="kicker">Entrenament</p>
+      <h2>Converteix-te en l'MVP de les potències</h2>
+      <p>Primer repassa la teoria i mira els exemples pas a pas. Després, a <b>Practica</b>, tria el tipus d'exercici i el nivell i suma cistelles al marcador.</p>
+      <div class="row">
+        <a class="btn primary" href="#t-ordre">Comença per la teoria</a>
+        <button class="btn" data-goto="practica">Vés a practicar ▸</button>
+      </div>
+    </div>
+    <svg class="hero-ball" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="52" fill="var(--ball)"/>
+      <g fill="none" stroke="var(--ball-line)" stroke-width="4">
+        <circle cx="60" cy="60" r="52"/>
+        <path d="M8 60h104M60 8v104M24 22c16 14 16 62 0 76M96 22c-16 14-16 62 0 76"/>
+      </g>
+      <text x="60" y="73" text-anchor="middle" font-family="KaTeX_Main, Times New Roman, serif" font-size="38" font-weight="700" fill="#fff">x<tspan font-size="22" dy="-16">2</tspan></text>
+    </svg>
+  </div>
+  <nav class="toc" aria-label="Apartats de la teoria">
+    <a href="#t-ordre">1. Ordre de les operacions</a>
+    <a href="#t-pot">2. Potències</a>
+    <a href="#t-arrel">3. Arrels quadrades</a>
+    <a href="#t-prop">4. Propietats de les potències</a>
+    <a href="#t-exemples">5. Exemples pas a pas</a>
+    <a href="#t-prova">6. Resol la teva operació</a>
+  </nav>
+
+  <!-- 1. Jerarquia -->
+  <article class="card" id="t-ordre">
+    <h2><span class="sec-n">1</span> L'ordre de les operacions</h2>
+    <p class="lead">Quan una expressió té diverses operacions, no les fem en l'ordre en què les llegim. Seguim sempre aquesta <b>jerarquia</b>:</p>
+    <ol class="hier" id="hier">
+      <li data-k="par" tabindex="0" role="button" aria-pressed="false"><span class="k">1</span><div><b>Parèntesis <span class="sym" data-tex="(\ )">( )</span> i claudàtors <span class="sym" data-tex="[\ ]">[ ]</span></b><small>Primer el que hi ha a dins, de dins cap a fora.</small></div></li>
+      <li data-k="pow" tabindex="0" role="button" aria-pressed="false"><span class="k">2</span><div><b>Potències <span class="sym" data-tex="a^{n}">aⁿ</span> i arrels <span class="sym" data-tex="\sqrt{\ }">√</span></b><small>Per exemple <span data-tex="3^{2}">3²</span> o <span data-tex="\sqrt{49}">√49</span>.</small></div></li>
+      <li data-k="mul" tabindex="0" role="button" aria-pressed="false"><span class="k">3</span><div><b>Multiplicacions <span class="sym" data-tex="\Large\cdot">·</span> i divisions <span class="sym" data-tex=":">:</span></b><small>D'esquerra a dreta, en l'ordre en què apareixen.</small></div></li>
+      <li data-k="sum" tabindex="0" role="button" aria-pressed="false"><span class="k">4</span><div><b>Sumes <span class="sym" data-tex="+">+</span> i restes <span class="sym" data-tex="-">−</span></b><small>Al final, també d'esquerra a dreta.</small></div></li>
+    </ol>
+    <div class="hier-demo">
+      <p class="hier-tip">👆 Toca un nivell de la llista per veure on és en aquest exemple:</p>
+      <div class="expr hier-ex" id="hier-ex"></div>
+    </div>
+    <div class="callout accent">
+      <p><b>Escriu tots els passos.</b> Cada vegada que facis operacions, escriu una línia nova començant amb <span data-tex="=">=</span>. A la mateixa línia pots fer operacions que no depenen l'una de l'altra (per exemple, dues potències diferents).</p>
+      <p>A l'examen, l'<b>ordre</b> de les operacions val més que el resultat!</p>
+    </div>
+    <h3>Errors típics</h3>
+    <div class="errs">
+      <div class="err">
+        <div class="q" data-tex="2 + 3 \cdot 4">2 + 3 · 4</div>
+        <p class="no">✗ <span data-tex="5 \cdot 4 = 20">5 · 4 = 20</span></p>
+        <p class="yes">✓ <span data-tex="2 + 12 = 14">2 + 12 = 14</span></p>
+        <p>La multiplicació va abans que la suma.</p>
+      </div>
+      <div class="err">
+        <div class="q" data-tex="12 : 2 \cdot 3">12 : 2 · 3</div>
+        <p class="no">✗ <span data-tex="12 : 6 = 2">12 : 6 = 2</span></p>
+        <p class="yes">✓ <span data-tex="6 \cdot 3 = 18">6 · 3 = 18</span></p>
+        <p>Multiplicacions i divisions: d'esquerra a dreta.</p>
+      </div>
+      <div class="err">
+        <div class="q" data-tex="2 \cdot 3^{2}">2 · 3²</div>
+        <p class="no">✗ <span data-tex="6^{2} = 36">6² = 36</span></p>
+        <p class="yes">✓ <span data-tex="2 \cdot 9 = 18">2 · 9 = 18</span></p>
+        <p>La potència només afecta el nombre que té a sota.</p>
+      </div>
+      <div class="err">
+        <div class="q" data-tex="20 - 5 + 3">20 − 5 + 3</div>
+        <p class="no">✗ <span data-tex="20 - 8 = 12">20 − 8 = 12</span></p>
+        <p class="yes">✓ <span data-tex="15 + 3 = 18">15 + 3 = 18</span></p>
+        <p>Sumes i restes: d'esquerra a dreta.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2. Potències -->
+  <article class="card" id="t-pot">
+    <h2><span class="sec-n">2</span> Les potències</h2>
+    <p class="lead">Una potència és una manera curta d'escriure una <b>multiplicació de factors iguals</b>.</p>
+    <div class="anatomy">
+      <div class="big" data-tex="a^{\color{#c0392b}n} = \overbrace{a \cdot a \cdot \ldots \cdot a}^{{\color{#c0392b}n} \text{ vegades}}">aⁿ = a · a · … · a</div>
+      <ul>
+        <li><b>Base (a):</b> el nombre que es multiplica.</li>
+        <li><b>Exponent (n):</b> quantes vegades es multiplica.</li>
+      </ul>
+    </div>
+    <div class="explorer" aria-live="polite">
+      <div>
+        <span class="ctl">Base
+          <button class="btn sm" data-px="b-1" aria-label="Disminueix la base">−</button>
+          <span class="v" id="px-b">3</span>
+          <button class="btn sm" data-px="b+1" aria-label="Augmenta la base">+</button>
+        </span>
+        <span class="ctl">Exponent
+          <button class="btn sm" data-px="e-1" aria-label="Disminueix l'exponent">−</button>
+          <span class="v" id="px-e">4</span>
+          <button class="btn sm" data-px="e+1" aria-label="Augmenta l'exponent">+</button>
+        </span>
+      </div>
+      <div class="out" id="px-out"></div>
+    </div>
+    <p>Es llegeix: <span data-tex="5^{2}">5²</span> «cinc al quadrat», <span data-tex="4^{3}">4³</span> «quatre al cub», <span data-tex="2^{5}">2⁵</span> «dos elevat a cinc».</p>
+    <h3>Casos especials</h3>
+    <div class="specials">
+      <div><span data-tex="a^{1} = a">a¹ = a</span><br><small data-tex="7^{1} = 7">7¹ = 7</small></div>
+      <div><span data-tex="a^{0} = 1">a⁰ = 1</span><br><small data-tex="9^{0} = 1 \ (a \neq 0)">9⁰ = 1 (a ≠ 0)</small></div>
+      <div><span data-tex="1^{n} = 1">1ⁿ = 1</span><br><small data-tex="1^{8} = 1">1⁸ = 1</small></div>
+      <div><span data-tex="10^{n}">10ⁿ</span> = 1 i n zeros<br><small data-tex="10^{4} = 10.000">10⁴ = 10.000</small></div>
+    </div>
+    <div class="callout warn"><p><b>Compte!</b> <span data-tex="2^{3}">2³</span> no és <span data-tex="2 \cdot 3">2 · 3</span>. És <span data-tex="2 \cdot 2 \cdot 2 = 8">2 · 2 · 2 = 8</span>.</p></div>
+  </article>
+
+  <!-- 3. Arrels -->
+  <article class="card" id="t-arrel">
+    <h2><span class="sec-n">3</span> Les arrels quadrades</h2>
+    <p class="lead">L'arrel quadrada és l'operació inversa d'elevar al quadrat.</p>
+    <p class="big-tex" data-tex="\sqrt{81} = 9 \quad \text{perquè} \quad 9^{2} = 81">√81 = 9 perquè 9² = 81</p>
+    <p>A les operacions combinades, les arrels tenen el <b>mateix nivell que les potències</b>. Per calcular-les ràpidament, va molt bé saber de memòria els <b>quadrats perfectes</b>. Si saps el quadrat, ja saps l'arrel:</p>
+    <div class="squares" id="squares"></div>
+    <div class="callout"><p>Si dins de l'arrel hi ha operacions, com <span data-tex="\sqrt{16 + 9}">√(16 + 9)</span>, primer es fan les operacions de dins: <span data-tex="\sqrt{16+9} = \sqrt{25} = 5">√25 = 5</span>.</p></div>
+  </article>
+
+  <!-- 4. Propietats -->
+  <article class="card" id="t-prop">
+    <h2><span class="sec-n">4</span> Propietats de les potències</h2>
+    <p class="lead">Quan les potències tenen la <b>mateixa base</b>, podem operar només amb els exponents.</p>
+    <div class="props">
+      <div class="prop">
+        <h3>Producte</h3>
+        <div class="rule" data-tex="a^{m} \cdot a^{n} = a^{m+n}">aᵐ · aⁿ = aᵐ⁺ⁿ</div>
+        <p>Es deixa la base i se <b>sumen</b> els exponents.</p>
+        <p data-tex="2^{3} \cdot 2^{4} = (2\cdot 2\cdot 2) \cdot (2\cdot 2\cdot 2\cdot 2) = 2^{7}"></p>
+      </div>
+      <div class="prop">
+        <h3>Quocient</h3>
+        <div class="rule" data-tex="a^{m} : a^{n} = a^{m-n}">aᵐ : aⁿ = aᵐ⁻ⁿ</div>
+        <p>Es deixa la base i es <b>resten</b> els exponents.</p>
+        <p data-tex="4^{5} : 4^{2} = 4^{5-2} = 4^{3}"></p>
+      </div>
+      <div class="prop">
+        <h3>Potència d'una potència</h3>
+        <div class="rule" data-tex="\left(a^{m}\right)^{n} = a^{m \cdot n}">(aᵐ)ⁿ = aᵐ·ⁿ</div>
+        <p>Es deixa la base i es <b>multipliquen</b> els exponents.</p>
+        <p data-tex="\left(2^{3}\right)^{2} = 2^{3} \cdot 2^{3} = 2^{6}"></p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <p><b>Compte!</b> Només funciona amb la <b>mateixa base</b> i amb <b>multiplicacions o divisions</b>:</p>
+      <p><span data-tex="2^{3} \cdot 2^{4} \neq 4^{7}"></span> (la base no es multiplica)<br><span data-tex="2^{3} + 2^{4} \neq 2^{7}"></span> (<span data-tex="8 + 16 = 24"></span>, però <span data-tex="2^{7} = 128"></span>)</p>
+    </div>
+    <h3>Exemple complet</h3>
+    <p class="big-tex" data-tex="\left(2^{5} : 2^{3}\right)^{2} \cdot 2^{6} = \left(2^{2}\right)^{2} \cdot 2^{6} = 2^{4} \cdot 2^{6} = 2^{10} = 1.024"></p>
+    <p>Primer el parèntesi (quocient), després la potència d'una potència i, al final, el producte.</p>
+  </article>
+
+  <!-- 5. Exemples pas a pas -->
+  <article class="card" id="t-exemples">
+    <h2><span class="sec-n">5</span> Exemples resolts pas a pas</h2>
+    <p class="lead">Tria un exemple i ves fent clic a <b>Pas següent</b>. En vermell, els nombres que acabem de calcular.</p>
+    <div class="chips" id="ex-chips"></div>
+    <div class="notebook" id="stepper-out"></div>
+    <div class="actions">
+      <button class="btn primary" id="st-next">Pas següent ▸</button>
+      <button class="btn" id="st-all">Mostra-ho tot</button>
+      <button class="btn ghost" id="st-reset">Torna a començar</button>
+    </div>
+  </article>
+
+  <!-- 6. Prova -->
+  <article class="card" id="t-prova">
+    <h2><span class="sec-n">6</span> Resol la teva operació</h2>
+    <p class="lead">Escriu una operació combinada tal com la veuries a la llibreta i mira com es resol pas a pas. Fes servir els botons per posar potències, arrels i parèntesis (o el teclat: <b>^</b> per elevar, <b>*</b> per multiplicar i <b>:</b> per dividir).</p>
+    <div class="mf-wrap" id="try-mf-wrap" hidden>
+      <math-field id="try-mf" class="try-mf" aria-label="Operació a resoldre">2^2\cdot5-14:7\cdot3^2</math-field>
+    </div>
+    <input class="try-input" id="try-in" value="2^2·5 - 14:7·3^2" aria-label="Operació a resoldre" autocomplete="off" spellcheck="false">
+    <div class="keys" id="try-keys">
+      <button data-k="^2" data-ins="^{2}" aria-label="Al quadrat">x²</button><button data-k="^3" data-ins="^{3}" aria-label="Al cub">x³</button><button data-k="^" data-ins="^{#?}" aria-label="Potència">xⁿ</button><button data-k="√" data-ins="\sqrt{#?}" aria-label="Arrel quadrada">√</button>
+      <button data-k="·" data-ins="\cdot" aria-label="Multiplicar">·</button><button data-k=":" data-ins=":" aria-label="Dividir">:</button><button data-k="+" data-ins="+" aria-label="Sumar">+</button><button data-k="-" data-ins="-" aria-label="Restar">−</button>
+      <button data-k="(" data-ins="\left(#?\right)" aria-label="Parèntesis">( )</button><button data-k="[" data-ins="\left[#?\right]" aria-label="Claudàtors">[ ]</button>
+      <button data-cmd="back" class="key-wide" aria-label="Esborra">⌫</button><button data-cmd="clear" class="key-wide" aria-label="Esborra-ho tot">Esborra-ho tot</button>
+    </div>
+    <div class="row"><button class="btn primary" id="try-go">Resol pas a pas</button></div>
+    <div id="try-out"></div>
+  </article>
+</section>
+
+<!-- =================== PRACTICA =================== -->
+<section id="practica" role="tabpanel" aria-labelledby="tab-practica" hidden>
+  <!-- Pantalla 1: preparar l'entrenament -->
+  <div id="setup">
+    <div class="card setup">
+      <h2 class="setup-title">🏀 Prepara l'entrenament</h2>
+
+      <div class="setup-grid">
+      <div class="setup-form">
+      <div class="prow">
+        <div class="prow-l"><span class="pstep-n">1</span><span id="lbl-type">Què?</span></div>
+        <div class="prow-r">
+          <div class="tiles tiles-type" id="seg-type" role="group" aria-labelledby="lbl-type">
+            <button class="tile" data-v="comb" aria-pressed="true">
+              <span class="tile-t">Operacions combinades</span>
+              <span class="tile-ex">Jerarquia de les operacions</span>
+            </button>
+            <button class="tile" data-v="prop" aria-pressed="false">
+              <span class="tile-t">Propietats de les potències</span>
+              <span class="tile-ex">Mateixa base</span>
+            </button>
+            <button class="tile" data-v="mix" aria-pressed="false">
+              <span class="tile-t">Barreja</span>
+              <span class="tile-ex" aria-hidden="true">🎲 de tot una mica</span>
+            </button>
+          </div>
+          <div class="subtypes" id="sub-comb">
+            <div class="seg seg-sm" id="seg-sub-comb" role="group" aria-label="Variant d'operacions combinades">
+              <button data-v="all" aria-pressed="true">Totes</button>
+              <button data-v="nopar" aria-pressed="false">Sense parèntesis</button>
+              <button data-v="par" aria-pressed="false">Amb parèntesis</button>
+            </div>
+          </div>
+          <div class="subtypes" id="sub-prop" hidden>
+            <div class="seg seg-sm" id="seg-sub-prop" role="group" aria-label="Variant de propietats">
+              <button data-v="all" aria-pressed="true">Totes barrejades</button>
+              <button data-v="mul" aria-pressed="false">Producte</button>
+              <button data-v="div" aria-pressed="false">Quocient</button>
+              <button data-v="pp" aria-pressed="false">Potència d'una potència</button>
+              <button data-v="comb" aria-pressed="false">Propietats combinades</button>
+            </div>
+            <p class="ctrl-help" id="sub-prop-help"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="prow">
+        <div class="prow-l"><span class="pstep-n">2</span><span id="lbl-level">Nivell</span></div>
+        <div class="prow-r">
+          <div class="seg seg-pill" id="seg-level" role="group" aria-labelledby="lbl-level">
+            <button data-v="1" aria-pressed="false">🏀 Bàsic</button>
+            <button data-v="2" aria-pressed="true">🏀🏀 Mitjà</button>
+            <button data-v="3" aria-pressed="false">🏀🏀🏀 Avançat</button>
+          </div>
+          <p class="ctrl-help" id="level-help"></p>
+        </div>
+      </div>
+
+      <div class="prow" id="ctrl-mode">
+        <div class="prow-l"><span class="pstep-n">3</span><span id="lbl-mode">Com?</span></div>
+        <div class="prow-r">
+          <div class="seg seg-pill" id="seg-mode" role="group" aria-labelledby="lbl-mode">
+            <button data-v="guiat" aria-pressed="true" title="Tries les operacions i l'app et corregeix cada línia">👣 Pas a pas</button>
+            <button data-v="final" aria-pressed="false" title="Ho fas a la llibreta i escrius el resultat final">🎯 Només el resultat</button>
+          </div>
+          <p class="ctrl-help" id="mode-help"></p>
+        </div>
+      </div>
+      </div>
+      <aside class="setup-preview" id="preview" aria-live="polite" aria-label="Exemples del nivell triat"></aside>
+      </div>
+
+      <div class="setup-go">
+        <button class="btn primary btn-big" id="btn-start">Comença ▸</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla 2: entrenament -->
+  <div id="training" hidden>
+    <div class="summary card">
+      <div class="summary-chips" id="summary"></div>
+      <button class="btn sm" id="btn-change">⚙ Canvia</button>
+    </div>
+
+    <div class="scoreboard" aria-live="polite">
+      <div class="sb-cell"><span class="sb-k">Cistelles</span><span class="sb-v"><span id="sc-ok">0</span><small> de <span id="sc-tot">0</span></small></span></div>
+      <div class="sb-cell"><span class="sb-k">Ratxa</span><span class="sb-v" id="sc-streak">0</span></div>
+      <div class="sb-cell"><span class="sb-k">Rècord</span><span class="sb-v" id="sc-best">0</span></div>
+      <div class="sb-badge" id="sc-badge">A escalfar!</div>
+      <button class="sb-reset" id="sc-reset" title="Posa el marcador a zero">Reinicia</button>
+    </div>
+
+    <article class="card" id="exercise" aria-live="polite"></article>
+  </div>
+</section>
+</main>
+
+<footer>Matemàtiques 1r ESO · Potències i operacions combinades · Els exercicis es generen a l'atzar i sempre es poden resoldre amb nombres naturals.</footer>
+
+<script src="app.js?v=21"></script>
+</body>
+</html>
