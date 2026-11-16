@@ -2,6 +2,11 @@
 
 Aplicació web per aprendre i practicar **operacions combinades** i **propietats de les potències** (situació d'aprenentatge «Qui és l'MVP?»).
 
+### 👉 [Obre l'aplicació](https://albertcid-pa.github.io/potencies-operacions-combinades/)
+
+- Web: https://albertcid-pa.github.io/potencies-operacions-combinades/
+- Directament a la pràctica: https://albertcid-pa.github.io/potencies-operacions-combinades/#practica
+
 ## Aprèn
 - Ordre de les operacions (jerarquia interactiva amb els símbols de cada operació).
 - Potències, arrels quadrades i propietats de les potències.
