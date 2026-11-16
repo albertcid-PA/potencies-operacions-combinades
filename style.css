@@ -190,7 +190,6 @@ section .card[id] { scroll-margin-top: 90px; }
 @media (max-width: 600px) { .prop p[data-tex] { overflow-x: auto; overflow-y: hidden; } }
 .err .q .katex { font-size: 1.3em; }
 .anatomy .big .katex { font-size: 1em; }
-.anatomy .big { font-size: 1.2rem; padding: 4px 0; }
 .rule .katex { font-size: 1em; }
 .katex .num.new { color: var(--accent); }
 .katex .node.sel { background: var(--info-soft); outline: 2px solid var(--info); border-radius: 6px; }
@@ -208,7 +207,7 @@ section .card[id] { scroll-margin-top: 90px; }
 
 /* Potències */
 .anatomy { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin: 10px 0; }
-.anatomy .big { font-family: var(--math); font-size: 3.4rem; line-height: 1; }
+.anatomy .big { font-family: var(--math); font-size: 1.5rem; line-height: 1; padding: 4px 0; }
 .anatomy .big sup { color: var(--accent); }
 .anatomy ul { margin: 0; padding-left: 18px; }
 .explorer { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
@@ -424,7 +423,6 @@ footer { color: var(--muted); font-size: .85rem; text-align: center; padding: 24
   .step { grid-template-columns: 1.1em 1fr; }
   .step-label { grid-column: 2; text-align: left; }
   .step .expr, .step .eq { font-size: 1.35rem; }
-  .anatomy .big { font-size: 1.25rem; }
   .hero { padding: 16px; }
   .hero-ball { width: 72px; height: 72px; align-self: flex-start; }
   .hero h2 { font-size: 1.3rem; }
@@ -448,7 +446,7 @@ footer { color: var(--muted); font-size: .85rem; text-align: center; padding: 24
   .sqcard { padding: 6px 2px; }
   .sqcard .katex { font-size: .95em; }
   .anatomy { gap: 10px; }
-  .anatomy .big { font-size: 1.65rem; }
+  .anatomy .big { font-size: 1.3rem; }
   .big-tex { font-size: 1.15rem; }
   .explorer { padding: 12px; }
   .explorer .out { font-size: 1.15rem; }
