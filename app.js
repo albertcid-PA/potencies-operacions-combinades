@@ -104,7 +104,7 @@ const normalize = t => replaceNodes(t, new Map(), new Set());
    En un tram, mentre quedin potències, arrels, multiplicacions o divisions,
    només es poden fer aquestes (si ja tenen els operands calculats).
    Quan no en queden, es fan les sumes i restes (d'esquerra a dreta). */
-function analyse(root) {
+function contexts(root) {
   const ctxs = [], ctxOf = new Map();
   const walk = (n, ctx) => {
     if (n.t === 'num') return;
@@ -117,6 +117,10 @@ function analyse(root) {
   const top = { ops: [], owner: null };
   ctxs.push(top);
   walk(root, top);
+  return { ctxs, ctxOf };
+}
+function analyse(root) {
+  const { ctxs, ctxOf } = contexts(root);
   const allowed = new Set();
   for (const c of ctxs) {
     const high = c.ops.some(o => prio(o) >= 2);
@@ -166,6 +170,82 @@ function solveSteps(root) {
     steps.push({ tree, created, label: labelFor(counts, allInner) });
   }
   return { steps, value: tree.v };
+}
+
+/* Resolució per fases, en l'ordre estricte de la jerarquia (per a "Resol la teva operació"):
+   1 tot el que hi ha dins dels parèntesis (i dins de les arrels), de dins cap a fora;
+   2 totes les potències i arrels; 3 totes les multiplicacions i divisions; 4 totes les sumes i restes.
+   Dins dels parèntesis també es fa per ordre: potències, després · i :, després + i −. */
+const opClass = n => (n.t === 'pow' || n.t === 'sqrt') ? 1 : (n.op === '·' || n.op === ':') ? 2 : 3;
+const PHASES = [
+  { title: 'Parèntesis', tex: ['(\\ )', '[\\ ]'], none: 'No hi ha parèntesis.' },
+  { title: 'Potències i arrels', tex: ['a^{n}', '\\sqrt{\\ }'], none: 'No hi ha potències ni arrels.', done: 'Ja no en queda cap.' },
+  { title: 'Multiplicacions i divisions', tex: ['\\Large\\cdot', ':'], none: 'No hi ha multiplicacions ni divisions.', done: 'Ja no en queda cap.' },
+  { title: 'Sumes i restes', tex: ['+', '-'], none: 'No hi ha sumes ni restes.', done: 'Ja no en queda cap.' },
+];
+function solvePhased(root) {
+  let tree = normalize(root);
+  const start = tree;
+  const phases = PHASES.map((p, i) => ({ n: i + 1, ...p, steps: [] }));
+  // operacions de la classe L que es poden fer als trams triats (sense res de classe inferior pendent al tram)
+  const pickOps = (inner, L) => {
+    const { ctxs, ctxOf } = contexts(tree);
+    const ids = [];
+    for (const c of ctxs) {
+      if (!!c.owner !== inner || c.ops.some(o => opClass(o) < L)) continue;
+      for (const o of c.ops) if (opClass(o) === L && ready(o)) ids.push(o.id);
+    }
+    return { ids, ctxOf };
+  };
+  const apply = (phase, ids, ctxOf, inner) => {
+    const map = new Map(), counts = new Map(), owners = new Set(), cs = new Set();
+    for (const id of ids) {
+      const n = findNode(tree, id);
+      const r = compute(n);
+      if (r.err) return r.err;
+      map.set(id, r.v);
+      counts.set(kindKey(n), (counts.get(kindKey(n)) || 0) + 1);
+      owners.add(ctxOf.get(id).owner); cs.add(ctxOf.get(id));
+    }
+    let label = labelFor(counts, false);
+    if (inner) {
+      const pl = cs.size > 1;
+      label += owners.size > 1 ? ' (dins dels parèntesis i de les arrels)'
+        : owners.has('sqrt') ? (pl ? ' (dins de les arrels)' : ' (dins de l\'arrel)')
+        : (pl ? ' (dins dels parèntesis)' : ' (dins del parèntesi)');
+    }
+    const created = new Set();
+    tree = replaceNodes(tree, map, created);
+    phase.steps.push({ tree, created, label });
+    return null;
+  };
+  const had = [false, false, false, false];
+  contexts(start).ctxs.forEach(c => c.ops.forEach(o => { had[opClass(o)] = true; if (c.owner) had[0] = true; }));
+  phases.forEach((p, i) => { p.had = had[i]; });
+  let guard = 0;
+  // fase 1: dins dels parèntesis i de les arrels
+  while (guard++ < 60) {
+    let did = false;
+    for (let L = 1; L <= 3 && !did; L++) {
+      const { ids, ctxOf } = pickOps(true, L);
+      if (ids.length) {
+        const err = apply(phases[0], ids, ctxOf, true);
+        if (err) return { start, phases, error: err, stop: 0 };
+        did = true;
+      }
+    }
+    if (!did) break;
+  }
+  // fases 2, 3 i 4: fora dels parèntesis
+  for (let L = 1; L <= 3; L++) {
+    while (guard++ < 120) {
+      const { ids, ctxOf } = pickOps(false, L);
+      if (!ids.length) break;
+      const err = apply(phases[L], ids, ctxOf, false);
+      if (err) return { start, phases, error: err, stop: L };
+    }
+  }
+  return { start, phases, value: tree.v };
 }
 
 /* ---------------- Dibuix d'expressions ---------------- */
@@ -271,6 +351,20 @@ function stepsHTML(steps, upto, withFirst) {
     h += `<div class="step"><span class="eq">${i === 0 ? '' : '='}</span><span class="expr">${exprHTML(st.tree, { created: st.created })}</span><span class="step-label">${st.label || ''}</span></div>`;
   });
   return h + '</div>';
+}
+// Resolució per fases: l'operació inicial i, a sota, les 4 fases de la jerarquia
+function phasedHTML(sol) {
+  const line = st => `<div class="step"><span class="eq">=</span><span class="expr">${exprHTML(st.tree, { created: st.created })}</span><span class="step-label">${st.label}</span></div>`;
+  let h = `<div class="steps"><div class="step"><span class="eq"></span><span class="expr">${exprHTML(sol.start, {})}</span><span class="step-label"></span></div></div>`;
+  const last = sol.error ? sol.stop : 3;
+  sol.phases.slice(0, last + 1).forEach((p, i) => {
+    const empty = !p.steps.length && !(sol.error && i === last);
+    h += `<div class="phase${empty ? ' empty' : ''}">
+      <div class="phase-h"><span class="phase-n">${p.n}</span><b>${p.title}</b>${p.tex.map(t => `<span class="sym">${M(t)}</span>`).join('')}${empty ? `<small>${p.had && p.done ? p.done : p.none}</small>` : ''}</div>
+      ${p.steps.length ? `<div class="steps">${p.steps.map(line).join('')}</div>` : ''}
+    </div>`;
+  });
+  return h;
 }
 
 /* ---------------- Lector d'expressions (per "Resol la teva operació") ---------------- */
@@ -816,8 +910,8 @@ function initTheory() {
       out.innerHTML = `<p class="err-msg">No entenc l'operació. ${why}</p>`;
       return;
     }
-    const sol = solveSteps(tree);
-    let h = `<div class="notebook" style="margin-top:12px">${stepsHTML(sol.steps, 99, true)}</div>`;
+    const sol = solvePhased(tree);
+    let h = `<div class="notebook phased" style="margin-top:12px">${phasedHTML(sol)}</div>`;
     if (sol.error) h += `<p class="err-msg">Aquí ens aturem: ${sol.error} Amb nombres naturals no es pot continuar.</p>`;
     else h += `<p class="result-line">Resultat: ${fmt(sol.value)}</p>`;
     out.innerHTML = h;

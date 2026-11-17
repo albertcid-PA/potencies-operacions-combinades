@@ -309,6 +309,18 @@ section .card[id] { scroll-margin-top: 90px; }
 .step .expr { font-size: 1.4rem; }
 .step .eq { font-size: 1.4rem; }
 .step-label { color: var(--muted); font-size: .85rem; text-align: right; }
+/* Resolució per fases (Resol la teva operació) */
+.phase { margin-top: 12px; padding: 8px 0 4px 12px; border-left: 4px solid var(--accent); }
+.phase-h { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.phase-h small { color: var(--muted); font-weight: 600; margin-left: 4px; }
+.phase-n {
+  width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: var(--accent); color: var(--accent-ink); font-weight: 800; font-size: .9rem;
+}
+.phase .steps { margin-top: 4px; }
+.phase.empty { border-left-color: var(--border); }
+.phase.empty .phase-n { background: var(--border); color: var(--muted); }
+.phase.empty .sym { opacity: .6; }
 .solbox { margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; background: var(--surface-2); }
 .solbox h4 { margin: 0 0 4px; font-size: .95rem; }
 .solbox .chain { font-family: var(--math); font-size: 1.35rem; line-height: 2; overflow-x: auto; white-space: nowrap; }
