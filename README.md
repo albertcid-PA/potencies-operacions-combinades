@@ -8,7 +8,7 @@ Aplicació web per aprendre i practicar **operacions combinades** i **propietats
 ## Aprèn
 - Ordre de les operacions (jerarquia interactiva amb els símbols de cada operació).
 - Potències, arrels quadrades i propietats de les potències.
-- Exemples resolts pas a pas.
+- Exemples resolts pas a pas, fase per fase.
 - «Resol la teva operació»: l'alumne escriu una operació en un editor visual i la veu resolta pas a pas, fase per fase: parèntesis, potències i arrels, multiplicacions i divisions, sumes i restes.
 
 ## Practica

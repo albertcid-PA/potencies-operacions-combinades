@@ -353,11 +353,17 @@ function stepsHTML(steps, upto, withFirst) {
   return h + '</div>';
 }
 // Resolució per fases: l'operació inicial i, a sota, les 4 fases de la jerarquia
-function phasedHTML(sol) {
+// upto: quantes línies es mostren (per anar pas a pas); les fases buides surten quan s'hi arriba
+const phasedCount = sol => sol.phases.reduce((s, p) => s + p.steps.length, 0);
+function phasedHTML(sol, upto = Infinity) {
   const line = st => `<div class="step"><span class="eq">=</span><span class="expr">${exprHTML(st.tree, { created: st.created })}</span><span class="step-label">${st.label}</span></div>`;
   let h = `<div class="steps"><div class="step"><span class="eq"></span><span class="expr">${exprHTML(sol.start, {})}</span><span class="step-label"></span></div></div>`;
   const last = sol.error ? sol.stop : 3;
+  let cum = 0;
   sol.phases.slice(0, last + 1).forEach((p, i) => {
+    const before = cum; cum += p.steps.length;
+    if (p.steps.length ? upto <= before : upto < before) return;
+    p = { ...p, steps: p.steps.slice(0, upto - before) };
     const empty = !p.steps.length && !(sol.error && i === last);
     h += `<div class="phase${empty ? ' empty' : ''}">
       <div class="phase-h"><span class="phase-n">${p.n}</span><b>${p.title}</b>${p.tex.map(t => `<span class="sym">${M(t)}</span>`).join('')}${empty ? `<small>${p.had && p.done ? p.done : p.none}</small>` : ''}</div>
@@ -835,25 +841,25 @@ function initTheory() {
     { name: '🎲 Aleatori · nivell 2', lvl: 2 },
     { name: '🎲 Aleatori · nivell 3', lvl: 3 },
   ];
-  const ST = { steps: [], shown: 0 };
+  const ST = { sol: null, total: 0, shown: 0 };
   const drawST = () => {
-    const last = ST.steps.length - 1;
-    $('#stepper-out').innerHTML = stepsHTML(ST.steps, ST.shown, true) +
-      (ST.shown >= last ? `<p class="result-line">Resultat: ${fmt(ST.steps[last].tree.v)}</p>` : '');
-    $('#st-next').disabled = ST.shown >= last;
-    $('#st-all').disabled = ST.shown >= last;
+    const done = ST.shown >= ST.total;
+    $('#stepper-out').innerHTML = phasedHTML(ST.sol, ST.shown) +
+      (done ? `<p class="result-line">Resultat: ${fmt(ST.sol.value)}</p>` : '');
+    $('#st-next').disabled = done;
+    $('#st-all').disabled = done;
   };
   const load = (i) => {
     const e = EX[i];
     const tree = e.lvl ? genCombined(e.lvl) : parseExpr(e.src);
-    ST.steps = solveSteps(tree).steps; ST.shown = 0;
+    ST.sol = solvePhased(tree); ST.total = phasedCount(ST.sol); ST.shown = 0;
     $$('#ex-chips button').forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
     drawST();
   };
   $('#ex-chips').innerHTML = EX.map((e, i) => `<button data-i="${i}" aria-pressed="false">${e.name}</button>`).join('');
   $('#ex-chips').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) load(+b.dataset.i); });
   $('#st-next').addEventListener('click', () => { ST.shown++; drawST(); });
-  $('#st-all').addEventListener('click', () => { ST.shown = ST.steps.length - 1; drawST(); });
+  $('#st-all').addEventListener('click', () => { ST.shown = ST.total; drawST(); });
   $('#st-reset').addEventListener('click', () => { ST.shown = 0; drawST(); });
   load(0);
 
