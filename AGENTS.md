@@ -12,3 +12,8 @@ Aplicació web de 1r d'ESO sobre potències i operacions combinades. Fitxers est
   ```
 
 - Als crèdits de l'app ha de constar: **«Albert Cid i Claude (Anthropic)»**.
+
+## Llicència
+
+- L'app es distribueix amb llicència **CC BY-NC-SA 4.0** a nom d'Albert Cid (vegeu `LICENSE.md`), la mateixa que els apunts de 2n de Batxillerat.
+- Mantén els crèdits i l'enllaç a la llicència al peu de l'app (`index.html`) i al README.

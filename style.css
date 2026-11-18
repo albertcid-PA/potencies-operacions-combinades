@@ -426,6 +426,8 @@ section .card[id] { scroll-margin-top: 90px; }
 .result-line { font-weight: 800; margin-top: 8px; }
 
 footer { color: var(--muted); font-size: .85rem; text-align: center; padding: 24px 16px 40px; }
+footer a { color: inherit; }
+footer a:hover { color: var(--accent); }
 
 @media (max-width: 600px) {
   body { font-size: 16px; }

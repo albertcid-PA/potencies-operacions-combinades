@@ -24,3 +24,8 @@ Fitxers estàtics (`index.html`, `style.css`, `app.js`). Fa servir [KaTeX](https
 
 ## Provar-la a l'ordinador
 Obre `index.html` amb el navegador.
+
+## Crèdits i llicència
+Aplicació feta per **Albert Cid i Claude (Anthropic)**. Es distribueix amb una llicència [CC BY-NC-SA 4.0](LICENSE.md).
+
+KaTeX i MathLive es carreguen des de CDN i mantenen les seves pròpies llicències (MIT).
